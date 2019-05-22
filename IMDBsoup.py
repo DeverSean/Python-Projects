@@ -100,7 +100,11 @@ def get_show_info(imdb_url_show):
 
 #ratings = get_dict_vals(tv_dict,'rating')
 
-show_dict = get_show_info('https://www.imdb.com/title/tt1475582/')
+print("Paste the imdb url of the TV Show you'd like to receive info about.")
+print("The following url format is accepted: https://www.imdb.com/title/ttxxxxxxx/")
+url = str(input())
+print("Loading data...")
+show_dict = get_show_info(url)
 
 pretty_dict(show_dict)
 
