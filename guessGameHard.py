@@ -1,5 +1,6 @@
 import random
-    
+wins = 1
+losses = 1
 
 
 while True:
@@ -23,37 +24,39 @@ while True:
     #    print(possibleValuesMin,possibleValuesCenter,possibleValuesMax)
 
         guess = int(input())
-        
-        if guess == possibleValuesCenter or guess == 10:
-            if guess in possibleValues:
-                possibleValues.remove(guess)
-            tilt = random.choice([-1,1])
-            guess += tilt
+        guess_persist = guess
 
-        if guess == 15 and tries == 3:
-            if guess in possibleValues:
-                possibleValues.remove(guess)
-            tilt = random.choice([-1,1])
-            guess += tilt
+        if len(possibleValues) == 1 and guess == possibleValues[0]:
+            print('You win!!!!!! The answer was '+ str(guess))
+            wins = wins+1
+            #print('\rwins:'+str(wins)+' losses:'+str(losses)+'  ratio:'+str(wins/losses),end = '')
+            break
 
-        if guess == 5 and tries == 3:
-            if guess in possibleValues:
+        if guess == possibleValuesCenter-0.5 or guess == possibleValuesCenter or guess == possibleValuesCenter+0.5:
+            if tries == 1 and len(possibleValues) == 2:
                 possibleValues.remove(guess)
-            tilt = random.choice([-1,1])
-            guess += tilt
-            
+                guess = possibleValuesCenter
+            elif guess in possibleValues:
+                possibleValues.remove(guess)
+                tilt = random.choice([-1,1])
+    #            print(str(tilt))
+                guess += tilt
+
         if guess > possibleValuesCenter:
             for i in range(guess,possibleValuesMax+1):
                 possibleValues.remove(i)
-            print('Guess is too high!')            
+            print('Guess is too high!')
         elif guess < possibleValuesCenter:
             for i in range(possibleValuesMin,guess+1):
                 possibleValues.remove(i)
             print('Guess is too low!')
-        
+
         tries = tries - 1
-        if tries <= 0:
-            print('You lose! The answer was ' + str(possibleValues[0]) + '.')
+        if tries <= 0 and len(possibleValues) > 0:
+            print('You lose! The answer was ' + str(random.choice(possibleValues)) + '.')
+            losses = losses+1
+            #print('\rwins:'+str(wins)+' losses:'+str(losses)+'  ratio:'+str(wins/losses),end = '')
+
             break
         else:
             print('You have ' + str(tries) + ' left.')
@@ -61,4 +64,3 @@ while True:
     sisyphus = str(input())
     if sisyphus == 'n':
         break
-        
